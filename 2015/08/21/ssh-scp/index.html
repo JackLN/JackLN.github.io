@@ -4,16 +4,14 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>CentOS root密码 | Jack&#39;s blog</title>
+    <title>ssh使用scp命令进行文件传输 | Jack&#39;s blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Jack.LN">
     
-    <meta name="description" content="使用root用户登录
-1root@localhost# passwd
-Changing password for user root.
-12New password:Retype new password:
-passwd: all authentication tokens updated succ">
+    <meta name="description" content="在终端中使用scp命令即可。可以进行单一文件的相互传输与文件夹的相互传输。
+常规使用从服务器下载文件1$ scp user@server:/path/to/file /path/to/local/dir
+上传本地文件至服务器1$ scp /path/to/file user@server:/path">
     
     
     
@@ -73,15 +71,15 @@ passwd: all authentication tokens updated succ">
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/08/21/CentOS-password/" title="CentOS root密码" itemprop="url">CentOS root密码</a>
+      <a href="/2015/08/21/ssh-scp/" title="ssh使用scp命令进行文件传输" itemprop="url">ssh使用scp命令进行文件传输</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://yoursite.com" title="Jack.LN">Jack.LN</a>
     </p>
   <p class="article-time">
-    <time datetime="2015-08-20T16:08:11.000Z" itemprop="datePublished">2015-08-21</time>
-    更新日期:<time datetime="2015-08-20T16:08:11.000Z" itemprop="dateModified">2015-08-21</time>
+    <time datetime="2015-08-20T16:35:44.000Z" itemprop="datePublished">2015-08-21</time>
+    更新日期:<time datetime="2015-08-20T16:35:44.000Z" itemprop="dateModified">2015-08-21</time>
     
   </p>
 </header>
@@ -90,21 +88,24 @@ passwd: all authentication tokens updated succ">
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#常规使用"><span class="toc-number">1.</span> <span class="toc-text">常规使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#从服务器下载文件"><span class="toc-number">1.1.</span> <span class="toc-text">从服务器下载文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#上传本地文件至服务器"><span class="toc-number">1.2.</span> <span class="toc-text">上传本地文件至服务器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#从服务器下载目录"><span class="toc-number">1.3.</span> <span class="toc-text">从服务器下载目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#上传目录到服务器"><span class="toc-number">1.4.</span> <span class="toc-text">上传目录到服务器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Tips"><span class="toc-number">2.</span> <span class="toc-text">Tips</span></a></li></ol>
 		</div>
 		
-		<p>使用root用户登录</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@localhost<span class="comment"># passwd</span></span><br></pre></td></tr></table></figure>
-<p>Changing password for user root.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">New password:</span><br><span class="line">Retype new password:</span><br></pre></td></tr></table></figure>
-<p>passwd: all authentication tokens updated successfully.</p>
+		<p>在终端中使用scp命令即可。<br>可以进行单一文件的相互传输与文件夹的相互传输。</p>
+<h2 id="常规使用">常规使用</h2><h3 id="从服务器下载文件">从服务器下载文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ scp user@server:/path/to/file /path/to/<span class="built_in">local</span>/dir</span><br></pre></td></tr></table></figure>
+<h3 id="上传本地文件至服务器">上传本地文件至服务器</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ scp /path/to/file user@server:/path/to/dir</span><br></pre></td></tr></table></figure>
+<h3 id="从服务器下载目录">从服务器下载目录</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ scp -r user@server:/path/to/dir/ /path/to/<span class="built_in">local</span></span><br></pre></td></tr></table></figure>
+<h3 id="上传目录到服务器">上传目录到服务器</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ scp -r /path/dir user@server:/path/to/dir</span><br></pre></td></tr></table></figure>
+<h2 id="Tips">Tips</h2><p>使用其实和cp mv命令几乎一样，只需注意本地与ssh登陆的切换。<br>如果向服务器制定端口传输加上－P，注意时大写的P。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ scp －P <span class="number">5678</span> -r /path/dir user@server:/path/to/dir</span><br></pre></td></tr></table></figure>
+<p>如果向服务器传输文件或者文件夹出现权限问题有两种处理办法。<br>其一是改其权限，其二是传输到服务器/tmp文件下在mv即可。<br>推荐使用后者，虽然稍显麻烦。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/linux/">linux</a>
+  <span></span> <a href="/tags/linux/">linux</a><a href="/tags/scp/">scp</a><a href="/tags/ssh/">ssh</a>
   </div>
 
 
@@ -112,7 +113,7 @@ passwd: all authentication tokens updated succ">
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yoursite.com/2015/08/21/CentOS-password/" data-title="CentOS root密码 | Jack&#39;s blog" data-tsina="null" class="share clearfix">
+  <div data-url="http://yoursite.com/2015/08/21/ssh-scp/" data-title="ssh使用scp命令进行文件传输 | Jack&#39;s blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -121,14 +122,14 @@ passwd: all authentication tokens updated succ">
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/08/21/ssh-scp/" title="ssh使用scp命令进行文件传输">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  ssh使用scp命令进行文件传输</span>
+
+<div class="next">
+<a href="/2015/08/21/CentOS-password/"  title="CentOS root密码">
+ <strong>NEXT:</strong><br/> 
+ <span>CentOS root密码
+</span>
 </a>
 </div>
-
 
 </nav>
 
@@ -138,7 +139,7 @@ passwd: all authentication tokens updated succ">
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#常规使用"><span class="toc-number">1.</span> <span class="toc-text">常规使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#从服务器下载文件"><span class="toc-number">1.1.</span> <span class="toc-text">从服务器下载文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#上传本地文件至服务器"><span class="toc-number">1.2.</span> <span class="toc-text">上传本地文件至服务器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#从服务器下载目录"><span class="toc-number">1.3.</span> <span class="toc-text">从服务器下载目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#上传目录到服务器"><span class="toc-number">1.4.</span> <span class="toc-text">上传目录到服务器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Tips"><span class="toc-number">2.</span> <span class="toc-text">Tips</span></a></li></ol>
   </div>
 
 <div id="asidepart">
