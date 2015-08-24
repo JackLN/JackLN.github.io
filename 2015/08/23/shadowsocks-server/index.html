@@ -70,15 +70,15 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/08/22/shadowsocks-server/" title="搭建shadowsocks" itemprop="url">搭建shadowsocks</a>
+      <a href="/2015/08/23/shadowsocks-server/" title="搭建shadowsocks" itemprop="url">搭建shadowsocks</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://yoursite.com" title="Jack.LN">Jack.LN</a>
     </p>
   <p class="article-time">
-    <time datetime="2015-08-22T14:22:11.000Z" itemprop="datePublished">2015-08-22</time>
-    更新日期:<time datetime="2015-08-22T14:22:11.000Z" itemprop="dateModified">2015-08-22</time>
+    <time datetime="2015-08-22T16:00:00.000Z" itemprop="datePublished">2015-08-23</time>
+    更新日期:<time datetime="2015-08-24T07:06:15.000Z" itemprop="dateModified">2015-08-24</time>
     
   </p>
 </header>
@@ -93,16 +93,25 @@
 		<p>可能由于各种各样的需求，需要访问越过GTW访问。<br>可能是访问技术社区，可能加快访问Github。<br>搭建一个shadowsocks会使你事半功倍。</p>
 <h2 id="前提需要">前提需要</h2><p>在墙外的服务器作为服务端。推荐搬瓦工，可以上网搜索一下特价（超划算）。<br>CentOS,Debian都无所谓。<br>能远程登录的设备，如果是windows需要ssh工具。<br>或者使用服务器租借商提供的web版命令行。</p>
 <h2 id="部署服务端">部署服务端</h2><h3 id="安装需求组件">安装需求组件</h3><p>CentOS:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum install m2crypto python-setuptools</span><br><span class="line">easy_install pip</span><br><span class="line">pip install shadowsocks</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>yum install m2crypto python-setuptools<br>easy_install pip<br>pip install shadowsocks</p>
+</blockquote>
 <p>Debian:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">apt-get -y install libxml2-dev libxslt-dev libevent-dev python-dev python-pip python-m2crypto python-gevent</span><br><span class="line">apt-get update &amp;&amp; apt-get upgrade -y &amp;&amp; apt-get install python-pip -y</span><br><span class="line">apt-get install python-m2crypto</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install shadowsocks</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install python-gevent -y</span><br><span class="line">sudo apt-get install libevent-dev python-pip -y</span><br><span class="line">sudo pip install gevent</span><br></pre></td></tr></table></figure>
-<h3 id="编写配置文件">编写配置文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi  /etc/shadowsocks.conf</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>apt-get -y install libxml2-dev libxslt-dev libevent-dev python-dev python-pip python-m2crypto python-gevent<br>apt-get update &amp;&amp; apt-get upgrade -y &amp;&amp; apt-get install python-pip -y<br>apt-get install python-m2crypto</p>
+<p>pip install shadowsocks</p>
+<p>sudo apt-get install python-gevent -y<br>sudo apt-get install libevent-dev python-pip -y<br>sudo pip install gevent</p>
+</blockquote>
+<h3 id="编写配置文件">编写配置文件</h3><blockquote>
+<p>vi  /etc/shadowsocks.conf</p>
+</blockquote>
 <p>写入配置：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"server"</span>:<span class="string">"0.0.0.0"</span>,</span><br><span class="line">    <span class="string">"server_port"</span>:<span class="number">8388</span>,</span><br><span class="line">    <span class="string">"local_address"</span>: <span class="string">"127.0.0.1"</span>,</span><br><span class="line">    <span class="string">"local_port"</span>:<span class="number">1080</span>,</span><br><span class="line">    <span class="string">"password"</span>:<span class="string">"mima"</span>,</span><br><span class="line">    <span class="string">"timeout"</span>:<span class="number">300</span>,</span><br><span class="line">    <span class="string">"method"</span>:<span class="string">"aes-256-cfb"</span>,</span><br><span class="line">    <span class="string">"fast_open"</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="string">"workers"</span>: <span class="number">1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>多用户端口配置：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"server"</span>: <span class="string">"0.0.0.1"</span>,</span><br><span class="line">    <span class="string">"local_port"</span>: <span class="number">1080</span>,</span><br><span class="line">    <span class="string">"port_password"</span>: &#123;</span><br><span class="line">        <span class="string">"6001"</span>: <span class="string">"mima1"</span>,</span><br><span class="line">        <span class="string">"6002"</span>: <span class="string">"mima2"</span>,</span><br><span class="line">        <span class="string">"6003"</span>: <span class="string">"mima3"</span>,</span><br><span class="line">        <span class="string">"6004"</span>: <span class="string">"mima4"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">"timeout"</span>: <span class="number">60</span>,</span><br><span class="line">    <span class="string">"method"</span>: <span class="string">"aes-256-cfb"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h3 id="部署服务">部署服务</h3><p>使用命令部署服务<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssserver -c /etc/shadowsocks.conf</span><br></pre></td></tr></table></figure></p>
+<h3 id="部署服务">部署服务</h3><p>使用命令部署服务</p>
+<blockquote>
+<p>ssserver -c /etc/shadowsocks.conf</p>
+</blockquote>
 <p>到此服务端的任务就完成了</p>
 <h2 id="不同的客户端设置">不同的客户端设置</h2><h3 id="windows与Mac_OS">windows与Mac OS</h3><p>网上可以找到很对shadowsocks的gui客户端,或者goAgent,goAgentX,一类的都可以。<br>下载下来按照格式设置好,再在对应的端口全局就可以了。<br>全局可以在IE中直接设置代理，这里我推荐使用firefox浏览器的autoProxy插件，注意设置socks5。</p>
 <h3 id="ubuntu">ubuntu</h3><p>步骤与服务端基本相同,最后自己全局就可以了。</p>
@@ -121,7 +130,7 @@
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yoursite.com/2015/08/22/shadowsocks-server/" data-title="搭建shadowsocks | Jack&#39;s blog" data-tsina="null" class="share clearfix">
+  <div data-url="http://yoursite.com/2015/08/23/shadowsocks-server/" data-title="搭建shadowsocks | Jack&#39;s blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -130,6 +139,14 @@
 	
 <nav class="article-nav clearfix">
  
+ <div class="prev" >
+ <a href="/2015/08/24/shade-Rect/" title="Cocos2dx中绘制一个矩形遮罩">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  Cocos2dx中绘制一个矩形遮罩</span>
+</a>
+</div>
+
 
 <div class="next">
 <a href="/2015/08/21/ssh-scp/"  title="ssh使用scp命令进行文件传输">
@@ -161,9 +178,15 @@
 	<p class="asidetitle">标签</p>
 		<ul class="clearfix">
 		
+			<li><a href="/tags/OpenGL绘制/" title="OpenGL绘制">OpenGL绘制<sup>1</sup></a></li>
+		
+			<li><a href="/tags/cocos2dx/" title="cocos2dx">cocos2dx<sup>1</sup></a></li>
+		
 			<li><a href="/tags/linux/" title="linux">linux<sup>2</sup></a></li>
 		
 			<li><a href="/tags/scp/" title="scp">scp<sup>1</sup></a></li>
+		
+			<li><a href="/tags/shader/" title="shader">shader<sup>1</sup></a></li>
 		
 			<li><a href="/tags/shadowsocks/" title="shadowsocks">shadowsocks<sup>1</sup></a></li>
 		
