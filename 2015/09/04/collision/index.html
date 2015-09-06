@@ -10,8 +10,9 @@
     <meta name="author" content="Jack.LN">
     
     <meta name="description" content="游戏中的碰撞检测存在于多个地方，一般都会使用游戏引擎或者物理引擎所提供的方法。这里我总结一些关于处理碰撞的东西。
-碰撞关于“点”点于圆，圆在程序中体现的数据为圆心，半径。判断点于圆的关系，可以判断点与圆心的距离dis和半径r的关系。
-dis &amp;lt; r 在圆内dis &amp;gt; r 在园外">
+碰撞关于“点”点与圆，圆在程序中体现的数据为圆心，半径。判断点于圆的关系，可以判断点与圆心的距离dis和半径r的关系。
+dis &amp;lt; r 在圆内dis &amp;gt; r 在园外
+点与矩形">
     
     
     
@@ -77,7 +78,7 @@ dis &amp;lt; r 在圆内dis &amp;gt; r 在园外">
     </p>
   <p class="article-time">
     <time datetime="2015-09-04T14:47:16.000Z" itemprop="datePublished">2015-09-04</time>
-    更新日期:<time datetime="2015-09-04T15:09:21.000Z" itemprop="dateModified">2015-09-04</time>
+    更新日期:<time datetime="2015-09-06T13:26:23.000Z" itemprop="dateModified">2015-09-06</time>
     
   </p>
 </header>
@@ -86,12 +87,15 @@ dis &amp;lt; r 在圆内dis &amp;gt; r 在园外">
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#碰撞"><span class="toc-number">1.</span> <span class="toc-text">碰撞</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#关于“点”"><span class="toc-number">1.1.</span> <span class="toc-text">关于“点”</span></a></li></ol></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#碰撞"><span class="toc-number">1.</span> <span class="toc-text">碰撞</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#关于“点”"><span class="toc-number">1.1.</span> <span class="toc-text">关于“点”</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关于矩形"><span class="toc-number">1.2.</span> <span class="toc-text">关于矩形</span></a></li></ol></li></ol>
 		</div>
 		
 		<p>游戏中的碰撞检测存在于多个地方，一般都会使用游戏引擎或者物理引擎所<br>提供的方法。这里我总结一些关于处理碰撞的东西。</p>
-<h1 id="碰撞">碰撞</h1><h2 id="关于“点”">关于“点”</h2><p>点于圆，圆在程序中体现的数据为圆心，半径。<br>判断点于圆的关系，可以判断点与圆心的距离dis和半径r的关系。</p>
+<h1 id="碰撞">碰撞</h1><h2 id="关于“点”">关于“点”</h2><p>点与圆，圆在程序中体现的数据为圆心，半径。<br>判断点于圆的关系，可以判断点与圆心的距离dis和半径r的关系。</p>
 <p>dis &lt; r 在圆内<br>dis &gt; r 在园外</p>
+<p>点与矩形，矩形在程序汇总体现的数据为左下角的顶点与长宽。<br>判断点与矩形的关系，可以判断点的x，y坐标与顶点坐标的关系。</p>
+<p>在矩形内: (x1 &lt; x0 &lt; x2) &amp;&amp; (y1 &lt; y0 &lt; y2)</p>
+<h2 id="关于矩形">关于矩形</h2><p>检测两个矩形是否碰撞,可以判断每一个矩形的每一个顶点是否在另一个矩形内。<br>如果有至少一个这样的点,那么两个矩形就有碰撞。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -136,7 +140,7 @@ dis &amp;lt; r 在圆内dis &amp;gt; r 在园外">
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#碰撞"><span class="toc-number">1.</span> <span class="toc-text">碰撞</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#关于“点”"><span class="toc-number">1.1.</span> <span class="toc-text">关于“点”</span></a></li></ol></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#碰撞"><span class="toc-number">1.</span> <span class="toc-text">碰撞</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#关于“点”"><span class="toc-number">1.1.</span> <span class="toc-text">关于“点”</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关于矩形"><span class="toc-number">1.2.</span> <span class="toc-text">关于矩形</span></a></li></ol></li></ol>
   </div>
 
 <div id="asidepart">
