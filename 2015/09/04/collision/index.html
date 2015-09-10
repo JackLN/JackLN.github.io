@@ -10,9 +10,9 @@
     <meta name="author" content="Jack.LN">
     
     <meta name="description" content="游戏中的碰撞检测存在于多个地方，一般都会使用游戏引擎或者物理引擎所提供的方法。这里我总结一些关于处理碰撞的东西。
-碰撞关于“点”点与圆，圆在程序中体现的数据为圆心，半径。判断点于圆的关系，可以判断点与圆心的距离dis和半径r的关系。
+碰撞点与圆圆在程序中体现的数据为圆心，半径。判断点于圆的关系，可以判断点与圆心的距离dis和半径r的关系。
 dis &amp;lt; r 在圆内dis &amp;gt; r 在园外
-点与矩形">
+点与矩形矩形在程序汇">
     
     
     
@@ -78,7 +78,7 @@ dis &amp;lt; r 在圆内dis &amp;gt; r 在园外
     </p>
   <p class="article-time">
     <time datetime="2015-09-04T14:47:16.000Z" itemprop="datePublished">2015-09-04</time>
-    更新日期:<time datetime="2015-09-09T15:53:18.000Z" itemprop="dateModified">2015-09-09</time>
+    更新日期:<time datetime="2015-09-10T12:51:34.000Z" itemprop="dateModified">2015-09-10</time>
     
   </p>
 </header>
@@ -87,17 +87,28 @@ dis &amp;lt; r 在圆内dis &amp;gt; r 在园外
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#碰撞"><span class="toc-number">1.</span> <span class="toc-text">碰撞</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#关于“点”"><span class="toc-number">1.1.</span> <span class="toc-text">关于“点”</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关于矩形"><span class="toc-number">1.2.</span> <span class="toc-text">关于矩形</span></a></li></ol></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#碰撞"><span class="toc-number">1.</span> <span class="toc-text">碰撞</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#点与圆"><span class="toc-number">1.1.</span> <span class="toc-text">点与圆</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#点与矩形"><span class="toc-number">1.2.</span> <span class="toc-text">点与矩形</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#矩形与矩形"><span class="toc-number">1.3.</span> <span class="toc-text">矩形与矩形</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#圆与圆"><span class="toc-number">1.4.</span> <span class="toc-text">圆与圆</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#圆与矩形"><span class="toc-number">1.5.</span> <span class="toc-text">圆与矩形</span></a></li></ol></li></ol>
 		</div>
 		
 		<p>游戏中的碰撞检测存在于多个地方，一般都会使用游戏引擎或者物理引擎所<br>提供的方法。这里我总结一些关于处理碰撞的东西。</p>
-<h1 id="碰撞">碰撞</h1><h2 id="关于“点”">关于“点”</h2><p>点与圆，圆在程序中体现的数据为圆心，半径。<br>判断点于圆的关系，可以判断点与圆心的距离dis和半径r的关系。</p>
+<h1 id="碰撞">碰撞</h1><h2 id="点与圆">点与圆</h2><p>圆在程序中体现的数据为圆心，半径。<br>判断点于圆的关系，可以判断点与圆心的距离dis和半径r的关系。</p>
 <p>dis &lt; r 在圆内<br>dis &gt; r 在园外</p>
-<p>点与矩形，矩形在程序汇总体现的数据为左下角的顶点与长宽。<br>判断点与矩形的关系，可以判断点的x，y坐标与顶点坐标的关系。</p>
+<h2 id="点与矩形">点与矩形</h2><p>矩形在程序汇总体现的数据为左下角的顶点与长宽。<br>判断点与矩形的关系，可以判断点的x，y坐标与顶点坐标的关系。</p>
+<blockquote>
 <p>在矩形内: (x1 &lt; x0 &lt; x2) &amp;&amp; (y1 &lt; y0 &lt; y2)</p>
-<h2 id="关于矩形">关于矩形</h2><p>第一种方法：<br>检测两个矩形是否碰撞,可以判断每一个矩形的每一个顶点是否在另一个矩形内。<br>如果有至少一个这样的点,那么两个矩形就有碰撞。</p>
-<p>第二种方法：</p>
-<p>满足以下所有条件。<br>a.第一个矩形的右边线在第二个矩形的左边线右边<br>b.第一个矩形的左边线在第二个矩形的右边线左边<br>c.第一个矩形的下边线在第二个矩形的上边线下面<br>d.第一个矩形的上边线在第二个矩形的下边线上边</p>
+</blockquote>
+<h2 id="矩形与矩形">矩形与矩形</h2><p>第一种方法：<br>检测两个矩形是否碰撞,可以判断每一个矩形的每一个顶点是否在另一个矩形内。<br>如果有至少一个这样的点,那么两个矩形就有碰撞。</p>
+<p>第二种方法：<br>满足以下所有条件。<br>a.第一个矩形的右边线在第二个矩形的左边线右边<br>b.第一个矩形的左边线在第二个矩形的右边线左边<br>c.第一个矩形的下边线在第二个矩形的上边线下面<br>d.第一个矩形的上边线在第二个矩形的下边线上边</p>
+<p>使用第二种方法会更好</p>
+<h2 id="圆与圆">圆与圆</h2><p>计算两个圆心的距离dis</p>
+<p>判断dis与圆心r1+r2的关系<br>dis &gt; r1 + r2没有碰撞<br>dis &lt;= r1 + r2碰撞</p>
+<h2 id="圆与矩形">圆与矩形</h2><p>矩形与圆的碰撞可以转化成这样一个问题<br>找出能代表矩形的标准点，判断这个点与圆的关系。<br>若这个点在圆内则碰撞，否则不碰撞。</p>
+<p>这个点的x,y坐标是这样描述的:<br>a.首先求出圆心到矩形中心的向量(dx,dy)。<br>b.令x等于abs(dx)和矩形宽的一半的较小值。<br>c.令y等于abs(dy)和矩形高的一半的较小值。</p>
+<p>最后求出点(x,y)与圆的关系。<br>将点与圆平移至坐标系原点，即为</p>
+<blockquote>
+<p>(dx-rx) X (dx-rx) + (dy-ry) X (dy-ry) &lt;= rXr</p>
+</blockquote>
+<p>其中点(rx,ry)为圆心,r为半径。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -150,7 +161,7 @@ dis &amp;lt; r 在圆内dis &amp;gt; r 在园外
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#碰撞"><span class="toc-number">1.</span> <span class="toc-text">碰撞</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#关于“点”"><span class="toc-number">1.1.</span> <span class="toc-text">关于“点”</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关于矩形"><span class="toc-number">1.2.</span> <span class="toc-text">关于矩形</span></a></li></ol></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#碰撞"><span class="toc-number">1.</span> <span class="toc-text">碰撞</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#点与圆"><span class="toc-number">1.1.</span> <span class="toc-text">点与圆</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#点与矩形"><span class="toc-number">1.2.</span> <span class="toc-text">点与矩形</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#矩形与矩形"><span class="toc-number">1.3.</span> <span class="toc-text">矩形与矩形</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#圆与圆"><span class="toc-number">1.4.</span> <span class="toc-text">圆与圆</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#圆与矩形"><span class="toc-number">1.5.</span> <span class="toc-text">圆与矩形</span></a></li></ol></li></ol>
   </div>
 
 <div id="asidepart">
