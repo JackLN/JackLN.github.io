@@ -4,24 +4,13 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>ubuntu使用docker | Jack&#39;s blog</title>
+    <title>Unity中的CG函数总结 | Jack&#39;s blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Jack.LN">
     
-    <meta name="description" content="安装docker
-
-sudo apt-get install docker docker.io
-
-重启终端
-
-sudo docker pull kalilinux/kali-linux-docker
-
-等待下载完成
-
-sudo docker images
-
-查看kali的id = IMAGE ID,">
+    <meta name="description" content="编写shader所用到的所有CG函数的汇总
+数学函数abs(x)              x绝对值.acos(x)             反余弦 x在[-1,1] 返回值在[0,PI].all(x)              x的所有成员都不等于0，返回true。反之false。any(x)  ">
     
     
     
@@ -79,15 +68,15 @@ sudo docker images
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/08/30/ubuntu-kali/" title="ubuntu使用docker" itemprop="url">ubuntu使用docker</a>
+      <a href="/2015/09/21/fun/" title="Unity中的CG函数总结" itemprop="url">Unity中的CG函数总结</a>
   </h1>
   <p class="article-author">By
     
       <a href="https://github.com/JackLN" title="Jack.LN">Jack.LN</a>
     </p>
   <p class="article-time">
-    <time datetime="2015-08-30T08:48:37.000Z" itemprop="datePublished">2015-08-30</time>
-    更新日期:<time datetime="2015-08-30T12:14:49.000Z" itemprop="dateModified">2015-08-30</time>
+    <time datetime="2015-09-21T11:36:24.000Z" itemprop="datePublished">2015-09-21</time>
+    更新日期:<time datetime="2015-09-21T12:43:14.000Z" itemprop="dateModified">2015-09-21</time>
     
   </p>
 </header>
@@ -96,33 +85,18 @@ sudo docker images
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#数学函数"><span class="toc-number">1.</span> <span class="toc-text">数学函数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#几何函数"><span class="toc-number">2.</span> <span class="toc-text">几何函数</span></a></li></ol>
 		</div>
 		
-		<p>安装docker</p>
-<blockquote>
-<p>sudo apt-get install docker docker.io</p>
-</blockquote>
-<p>重启终端</p>
-<blockquote>
-<p>sudo docker pull kalilinux/kali-linux-docker</p>
-</blockquote>
-<p>等待下载完成</p>
-<blockquote>
-<p>sudo docker images</p>
-</blockquote>
-<p>查看kali的id = IMAGE ID,</p>
-<blockquote>
-<p>sudo run -i -t id /bin/bash</p>
-</blockquote>
-<p>完工。<br>推出exit。</p>
-  
+		<p>编写shader所用到的所有CG函数的汇总</p>
+<h1 id="数学函数">数学函数</h1><p>abs(x)              x绝对值.<br>acos(x)             反余弦 x在[-1,1] 返回值在[0,PI].<br>all(x)              x的所有成员都不等于0，返回true。反之false。<br>any(x)              x的成员有不等于0的，返回true。反之false。<br>asin(x)             反正弦 x在[-1,1] 返回值在[-PI/2,PI/2]。<br>atan(x)             反正切 返回值[-PI/2,PI/2],一般用于处理圆形化。<br>atan2(x,y)          x/y的反正切 返回值[-PI,PI]<br>cell(x)             不小于x的最小整数<br>clamp(x,a,b)        x小于a,返回a；x大于b,返回b；否则返回x。<br>cos(x)              余弦 返回值[-1,1]<br>cosh(x)             双曲余弦<br>cross(A,B)          两个3元向量的外积。<br>degrees(x)          弧度转化成角度<br>determinant(M)      矩阵M的行列式的值<br>dot(A,B)            两个向量的点积。<br>exp(x)              e的x次方。<br>exp2(x)             2的x次方。<br>floor(x)            不大于x的最大整数<br>fmod(x,y)           x/y的余数。<br>frac(x)             x的小数部分。<br>frexp(x,out,exp)    2的次幂保存在exp中。x等于0，则全是0.<br>isfinite(x)         x是有限的返回true<br>isinf(x)            x是无限的返回true<br>isnan(x)            x不是数字返回true<br>ldexp(x,n)          2的n次方乘以x<br>lerp(a,b,f)         (1-f)*a+b*f。ab类型一样。<br>lit(NdotL,          为环境光，镜面反射，漫反射计算光照系数<br>    NdotH,          NdotL为N L，NdotH为N H<br>    m)              返回xyzw<br>log(x)              返回ln(x),x &gt; 0<br>log2(x)             返回以2为底x的对数。x &gt; 0<br>log10(x)            返回以10为底x的对数。x &gt; 0<br>max(a,b)            返回ab中大的<br>min(a,b)            返回ab中小的<br>modf(x,out ip)      x分成整数和分数两部分,符号相同,返回分数,ip整数<br>mul(N,M)            矩阵的乘积<br>mul(M,v)            矩阵与向量的乘积<br>mul(v,M)            向量雨矩阵的乘积<br>noise(x)            噪声函数，返回(0,1)<br>pow(x,y)            x的y次方<br>radians(x)          角度转弧度<br>round(x)            距离x最近的整数<br>rsqrt(x)            x平方根的倒数<br>saturate(x)         把x限制在[0,1]内<br>sign(x)             x&gt;0,返回1,否则返回0<br>sin(x)              x的正弦<br>sincos(float x,<br>        out s,      s正弦,c余弦<br>        out c)<br>sinh(x)             x的双曲正弦<br>smoothstep(min,max  x<min,0;x>max,1;<br>            x)      否则返回[0,1]之间的数<br>step(a,x)           x<a,0;x>=a,1<br>sqrt(x)             x的平方根，x&gt;0<br>tan(x)              x的正切<br>tanh(x)             x的双曲正切<br>transpose(M)        矩阵M的转置矩阵</a,0;x></min,0;x></p>
+<h1 id="几何函数">几何函数</h1>  
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/Ubuntu/">Ubuntu</a><a href="/tags/docker/">docker</a><a href="/tags/kali/">kali</a>
+  <span></span> <a href="/tags/Unity/">Unity</a>
   </div>
 
 
@@ -130,7 +104,7 @@ sudo docker images
 
 <div class="article-share" id="share">
 
-  <div data-url="https://github.com/JackLN/2015/08/30/ubuntu-kali/" data-title="ubuntu使用docker | Jack&#39;s blog" data-tsina="null" class="share clearfix">
+  <div data-url="https://github.com/JackLN/2015/09/21/fun/" data-title="Unity中的CG函数总结 | Jack&#39;s blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -139,19 +113,11 @@ sudo docker images
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/09/04/collision/" title="2D游戏中的碰撞检测">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  2D游戏中的碰撞检测</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2015/08/29/blur-sprite/"  title="Cocos2dx的绘制与特效（三）    blur精灵">
+<a href="/2015/09/19/web-url/"  title="一些比较不错的网站">
  <strong>NEXT:</strong><br/> 
- <span>Cocos2dx的绘制与特效（三）    blur精灵
+ <span>一些比较不错的网站
 </span>
 </a>
 </div>
@@ -168,7 +134,7 @@ sudo docker images
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#数学函数"><span class="toc-number">1.</span> <span class="toc-text">数学函数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#几何函数"><span class="toc-number">2.</span> <span class="toc-text">几何函数</span></a></li></ol>
   </div>
 
 <div id="asidepart">
