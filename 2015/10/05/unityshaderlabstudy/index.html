@@ -77,7 +77,7 @@ Unity中的Shader可以有3种形态a.固定管线形如，
     </p>
   <p class="article-time">
     <time datetime="2015-10-05T14:09:20.000Z" itemprop="datePublished">2015-10-05</time>
-    更新日期:<time datetime="2015-10-05T15:47:41.000Z" itemprop="dateModified">2015-10-05</time>
+    更新日期:<time datetime="2015-10-05T16:07:40.000Z" itemprop="dateModified">2015-10-06</time>
     
   </p>
 </header>
@@ -86,7 +86,7 @@ Unity中的Shader可以有3种形态a.固定管线形如，
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Shader"><span class="toc-number">1.</span> <span class="toc-text">Shader</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Unity中的Shader"><span class="toc-number"></span> <span class="toc-text">Unity中的Shader</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#shader数据接口"><span class="toc-number"></span> <span class="toc-text">shader数据接口</span></a>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Shader"><span class="toc-number">1.</span> <span class="toc-text">Shader</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Unity中的Shader"><span class="toc-number"></span> <span class="toc-text">Unity中的Shader</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#shader数据接口"><span class="toc-number"></span> <span class="toc-text">shader数据接口</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#空间"><span class="toc-number">1.</span> <span class="toc-text">空间</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#模型空间"><span class="toc-number"></span> <span class="toc-text">模型空间</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#世界坐标空间"><span class="toc-number"></span> <span class="toc-text">世界坐标空间</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#相机空间"><span class="toc-number"></span> <span class="toc-text">相机空间</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#投影矩阵"><span class="toc-number"></span> <span class="toc-text">投影矩阵</span></a>
 		</div>
 		
 		<h2 id="Shader">Shader</h2><h1 id="Unity中的Shader">Unity中的Shader</h1><p>在Unity的ShaderLab中提供了GLSL,代码写在GLSLPROGRAM和ENDGLSL之间。<br>还提供了Cg/HLSL,代码写在CGPROGRAM和ENDCG之间。</p>
@@ -113,6 +113,13 @@ Unity中的Shader可以有3种形态a.固定管线形如，
 <blockquote>
 <p>uniformfloat4x4 _Matrix;</p>
 </blockquote>
+<h2 id="空间">空间</h2><h1 id="模型空间">模型空间</h1><p>模型空间可以说是本地坐标系。<br>以模型的锚点为坐标系原点形成的三位欧几里德空间。</p>
+<p>本地到世界坐标系<br>在脚本中:transform.worldToLocalMatrix的MultiplyPoint或者MultiplyVector方法都可以搞定。<br>在Shader中通过左乘_World2Object。</p>
+<h1 id="世界坐标空间">世界坐标空间</h1><p>所有模型所处的整个世界的三维欧几里德空间。</p>
+<p>世界到本地坐标系<br>在脚本中:transform.localToWorldMatrix的MultiplyPoint或者MultiplyVector方法都可以搞定。<br>在Shader中左乘_Object2World。</p>
+<h1 id="相机空间">相机空间</h1><p>camera的坐标空间。就是相机能看到到世界空间的那一部分。</p>
+<p>脚本中:cameraToWorldMatrix.Shader中:UNITY_MATRIX_MV.</p>
+<h1 id="投影矩阵">投影矩阵</h1><p>脚本中:projectionMatrix.Shader中:UNITY_MATRIX_MVP.</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -157,7 +164,7 @@ Unity中的Shader可以有3种形态a.固定管线形如，
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Shader"><span class="toc-number">1.</span> <span class="toc-text">Shader</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Unity中的Shader"><span class="toc-number"></span> <span class="toc-text">Unity中的Shader</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#shader数据接口"><span class="toc-number"></span> <span class="toc-text">shader数据接口</span></a>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Shader"><span class="toc-number">1.</span> <span class="toc-text">Shader</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Unity中的Shader"><span class="toc-number"></span> <span class="toc-text">Unity中的Shader</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#shader数据接口"><span class="toc-number"></span> <span class="toc-text">shader数据接口</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#空间"><span class="toc-number">1.</span> <span class="toc-text">空间</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#模型空间"><span class="toc-number"></span> <span class="toc-text">模型空间</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#世界坐标空间"><span class="toc-number"></span> <span class="toc-text">世界坐标空间</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#相机空间"><span class="toc-number"></span> <span class="toc-text">相机空间</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#投影矩阵"><span class="toc-number"></span> <span class="toc-text">投影矩阵</span></a>
   </div>
 
 <div id="asidepart">
