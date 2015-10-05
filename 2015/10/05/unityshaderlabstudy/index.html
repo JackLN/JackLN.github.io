@@ -4,16 +4,14 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>CentOS root密码 | Jack&#39;s blog</title>
+    <title>UnityShaderLab学习笔记 | Jack&#39;s blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Jack.LN">
     
-    <meta name="description" content="使用root用户登录
-1root@localhost# passwd
-Changing password for user root.
-12New password:Retype new password:
-passwd: all authentication tokens updated succ">
+    <meta name="description" content="ShaderUnity中的Shader在Unity的ShaderLab中提供了GLSL,代码写在GLSLPROGRAM和ENDGLSL之间。还提供了Cg/HLSL,代码写在CGPROGRAM和ENDCG之间。
+Unity中的Shader可以有3种形态a.固定管线形如，
+12345678910Shad">
     
     
     
@@ -71,15 +69,15 @@ passwd: all authentication tokens updated succ">
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/08/21/CentOS-password/" title="CentOS root密码" itemprop="url">CentOS root密码</a>
+      <a href="/2015/10/05/unityshaderlabstudy/" title="UnityShaderLab学习笔记" itemprop="url">UnityShaderLab学习笔记</a>
   </h1>
   <p class="article-author">By
     
       <a href="https://github.com/JackLN" title="Jack.LN">Jack.LN</a>
     </p>
   <p class="article-time">
-    <time datetime="2015-08-20T16:08:11.000Z" itemprop="datePublished">2015-08-21</time>
-    更新日期:<time datetime="2015-08-20T16:08:11.000Z" itemprop="dateModified">2015-08-21</time>
+    <time datetime="2015-10-05T14:09:20.000Z" itemprop="datePublished">2015-10-05</time>
+    更新日期:<time datetime="2015-10-05T15:47:41.000Z" itemprop="dateModified">2015-10-05</time>
     
   </p>
 </header>
@@ -88,21 +86,40 @@ passwd: all authentication tokens updated succ">
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Shader"><span class="toc-number">1.</span> <span class="toc-text">Shader</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Unity中的Shader"><span class="toc-number"></span> <span class="toc-text">Unity中的Shader</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#shader数据接口"><span class="toc-number"></span> <span class="toc-text">shader数据接口</span></a>
 		</div>
 		
-		<p>使用root用户登录</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@localhost<span class="comment"># passwd</span></span><br></pre></td></tr></table></figure>
-<p>Changing password for user root.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">New password:</span><br><span class="line">Retype new password:</span><br></pre></td></tr></table></figure>
-<p>passwd: all authentication tokens updated successfully.</p>
+		<h2 id="Shader">Shader</h2><h1 id="Unity中的Shader">Unity中的Shader</h1><p>在Unity的ShaderLab中提供了GLSL,代码写在GLSLPROGRAM和ENDGLSL之间。<br>还提供了Cg/HLSL,代码写在CGPROGRAM和ENDCG之间。</p>
+<p>Unity中的Shader可以有3种形态<br>a.固定管线<br>形如，</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Shader <span class="string">"file/to/name"</span>&#123;</span><br><span class="line">       Properties&#123;</span><br><span class="line">       ...</span><br><span class="line">       &#125;</span><br><span class="line">       SubShader&#123;</span><br><span class="line">	Pass&#123;</span><br><span class="line">	...</span><br><span class="line">	&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>所有的代码都在一个Pass块中,很少使用。</p>
+<p>b.vertex &amp; fragment Shader<br>也称作可编程Shader,熟悉其他的开源游戏引擎（如cocos2dx）可能听说过。<br>超级强大,shadertoy上有很多大神使用其完成了很多超级棒的效果！<br>形如，<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">Shader <span class="string">"file/to/name"</span>&#123;</span><br><span class="line">       Properties&#123;</span><br><span class="line">       ...</span><br><span class="line">       &#125;</span><br><span class="line">       Tags&#123; ... &#125;</span><br><span class="line">       Pass&#123;</span><br><span class="line"></span><br><span class="line">       CGPROGRAM</span><br><span class="line">       <span class="comment">#pragma vertex vert</span></span><br><span class="line">       <span class="comment">#pragma fragment frag</span></span><br><span class="line">       <span class="comment">#include "UnityCG.cginc"</span></span><br><span class="line"></span><br><span class="line">       struct vext_out&#123; ... &#125;;</span><br><span class="line">       vext_out vert(appdata_full v) &#123; ... &#125;;</span><br><span class="line">       <span class="built_in">float</span>4 frag(vext_out v)&#123; ... &#125;;</span><br><span class="line"></span><br><span class="line">       ENDCG</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       FallBack <span class="string">"Diffuse"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>#pragma 有很多设置选项，告诉Unity如何去编译Shader<br>对于不同的平台和设备有更好的适配方案。</p>
+<p>c.Surface Shader<br>Unity推荐的使用的Shader。<br>Unity为其包装了很多复杂的东西,但其实最后也是生成了一个vertex &amp; fragment Shader。<br>具体形式随便新建一个shader文件,默认的就是Surface Shader。</p>
+<h1 id="shader数据接口">shader数据接口</h1><p>在Shader中可以看作是一个常量,不过这个常量的赋值在外部完成。<br>首先在Properties块中定义，</p>
+<blockquote>
+<p>_Color(“Custom Color”,Color)=(1,1,1,1)</p>
+</blockquote>
+<p>然后在Shader代码块中声明才能使用，</p>
+<blockquote>
+<p>float _Color;</p>
+</blockquote>
+<p>关于赋值可以在Unity界面的面板中赋值，<br>也可以在脚本中赋值</p>
+<blockquote>
+<p>mat.setColor(“_Color”,myColor);</p>
+</blockquote>
+<p>mat是一个Material。</p>
+<p>PS:矩阵的声明比较特殊，Propreties中不能定义。<br>直接声明，</p>
+<blockquote>
+<p>uniformfloat4x4 _Matrix;</p>
+</blockquote>
   
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/linux/">linux</a>
+  <span></span> <a href="/tags/Shader/">Shader</a><a href="/tags/ShaderLab/">ShaderLab</a><a href="/tags/Unity/">Unity</a>
   </div>
 
 
@@ -110,7 +127,7 @@ passwd: all authentication tokens updated succ">
 
 <div class="article-share" id="share">
 
-  <div data-url="https://github.com/JackLN/2015/08/21/CentOS-password/" data-title="CentOS root密码 | Jack&#39;s blog" data-tsina="null" class="share clearfix">
+  <div data-url="https://github.com/JackLN/2015/10/05/unityshaderlabstudy/" data-title="UnityShaderLab学习笔记 | Jack&#39;s blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -119,14 +136,14 @@ passwd: all authentication tokens updated succ">
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/08/21/ssh-scp/" title="ssh使用scp命令进行文件传输">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  ssh使用scp命令进行文件传输</span>
+
+<div class="next">
+<a href="/2015/09/27/opengl/"  title="OpenGL Shader备忘">
+ <strong>NEXT:</strong><br/> 
+ <span>OpenGL Shader备忘
+</span>
 </a>
 </div>
-
 
 </nav>
 
@@ -140,7 +157,7 @@ passwd: all authentication tokens updated succ">
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Shader"><span class="toc-number">1.</span> <span class="toc-text">Shader</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Unity中的Shader"><span class="toc-number"></span> <span class="toc-text">Unity中的Shader</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#shader数据接口"><span class="toc-number"></span> <span class="toc-text">shader数据接口</span></a>
   </div>
 
 <div id="asidepart">
