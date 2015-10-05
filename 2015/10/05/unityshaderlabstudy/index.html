@@ -77,7 +77,7 @@ Unity中的Shader可以有3种形态a.固定管线形如，
     </p>
   <p class="article-time">
     <time datetime="2015-10-05T14:09:20.000Z" itemprop="datePublished">2015-10-05</time>
-    更新日期:<time datetime="2015-10-05T16:07:40.000Z" itemprop="dateModified">2015-10-06</time>
+    更新日期:<time datetime="2015-10-05T16:12:08.000Z" itemprop="dateModified">2015-10-06</time>
     
   </p>
 </header>
@@ -86,17 +86,17 @@ Unity中的Shader可以有3种形态a.固定管线形如，
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Shader"><span class="toc-number">1.</span> <span class="toc-text">Shader</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Unity中的Shader"><span class="toc-number"></span> <span class="toc-text">Unity中的Shader</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#shader数据接口"><span class="toc-number"></span> <span class="toc-text">shader数据接口</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#空间"><span class="toc-number">1.</span> <span class="toc-text">空间</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#模型空间"><span class="toc-number"></span> <span class="toc-text">模型空间</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#世界坐标空间"><span class="toc-number"></span> <span class="toc-text">世界坐标空间</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#相机空间"><span class="toc-number"></span> <span class="toc-text">相机空间</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#投影矩阵"><span class="toc-number"></span> <span class="toc-text">投影矩阵</span></a>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Shader"><span class="toc-number">1.</span> <span class="toc-text">Shader</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Unity中的Shader"><span class="toc-number">1.1.</span> <span class="toc-text">Unity中的Shader</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#shader数据接口"><span class="toc-number">1.2.</span> <span class="toc-text">shader数据接口</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#空间"><span class="toc-number">2.</span> <span class="toc-text">空间</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#模型空间"><span class="toc-number">2.1.</span> <span class="toc-text">模型空间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#世界坐标空间"><span class="toc-number">2.2.</span> <span class="toc-text">世界坐标空间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相机空间"><span class="toc-number">2.3.</span> <span class="toc-text">相机空间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#投影矩阵"><span class="toc-number">2.4.</span> <span class="toc-text">投影矩阵</span></a></li></ol></li></ol>
 		</div>
 		
-		<h2 id="Shader">Shader</h2><h1 id="Unity中的Shader">Unity中的Shader</h1><p>在Unity的ShaderLab中提供了GLSL,代码写在GLSLPROGRAM和ENDGLSL之间。<br>还提供了Cg/HLSL,代码写在CGPROGRAM和ENDCG之间。</p>
+		<h1 id="Shader">Shader</h1><h2 id="Unity中的Shader">Unity中的Shader</h2><p>在Unity的ShaderLab中提供了GLSL,代码写在GLSLPROGRAM和ENDGLSL之间。<br>还提供了Cg/HLSL,代码写在CGPROGRAM和ENDCG之间。</p>
 <p>Unity中的Shader可以有3种形态<br>a.固定管线<br>形如，</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Shader <span class="string">"file/to/name"</span>&#123;</span><br><span class="line">       Properties&#123;</span><br><span class="line">       ...</span><br><span class="line">       &#125;</span><br><span class="line">       SubShader&#123;</span><br><span class="line">	Pass&#123;</span><br><span class="line">	...</span><br><span class="line">	&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>所有的代码都在一个Pass块中,很少使用。</p>
 <p>b.vertex &amp; fragment Shader<br>也称作可编程Shader,熟悉其他的开源游戏引擎（如cocos2dx）可能听说过。<br>超级强大,shadertoy上有很多大神使用其完成了很多超级棒的效果！<br>形如，<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">Shader <span class="string">"file/to/name"</span>&#123;</span><br><span class="line">       Properties&#123;</span><br><span class="line">       ...</span><br><span class="line">       &#125;</span><br><span class="line">       Tags&#123; ... &#125;</span><br><span class="line">       Pass&#123;</span><br><span class="line"></span><br><span class="line">       CGPROGRAM</span><br><span class="line">       <span class="comment">#pragma vertex vert</span></span><br><span class="line">       <span class="comment">#pragma fragment frag</span></span><br><span class="line">       <span class="comment">#include "UnityCG.cginc"</span></span><br><span class="line"></span><br><span class="line">       struct vext_out&#123; ... &#125;;</span><br><span class="line">       vext_out vert(appdata_full v) &#123; ... &#125;;</span><br><span class="line">       <span class="built_in">float</span>4 frag(vext_out v)&#123; ... &#125;;</span><br><span class="line"></span><br><span class="line">       ENDCG</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       FallBack <span class="string">"Diffuse"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>#pragma 有很多设置选项，告诉Unity如何去编译Shader<br>对于不同的平台和设备有更好的适配方案。</p>
 <p>c.Surface Shader<br>Unity推荐的使用的Shader。<br>Unity为其包装了很多复杂的东西,但其实最后也是生成了一个vertex &amp; fragment Shader。<br>具体形式随便新建一个shader文件,默认的就是Surface Shader。</p>
-<h1 id="shader数据接口">shader数据接口</h1><p>在Shader中可以看作是一个常量,不过这个常量的赋值在外部完成。<br>首先在Properties块中定义，</p>
+<h2 id="shader数据接口">shader数据接口</h2><p>在Shader中可以看作是一个常量,不过这个常量的赋值在外部完成。<br>首先在Properties块中定义，</p>
 <blockquote>
 <p>_Color(“Custom Color”,Color)=(1,1,1,1)</p>
 </blockquote>
@@ -113,13 +113,13 @@ Unity中的Shader可以有3种形态a.固定管线形如，
 <blockquote>
 <p>uniformfloat4x4 _Matrix;</p>
 </blockquote>
-<h2 id="空间">空间</h2><h1 id="模型空间">模型空间</h1><p>模型空间可以说是本地坐标系。<br>以模型的锚点为坐标系原点形成的三位欧几里德空间。</p>
+<h1 id="空间">空间</h1><h2 id="模型空间">模型空间</h2><p>模型空间可以说是本地坐标系。<br>以模型的锚点为坐标系原点形成的三位欧几里德空间。</p>
 <p>本地到世界坐标系<br>在脚本中:transform.worldToLocalMatrix的MultiplyPoint或者MultiplyVector方法都可以搞定。<br>在Shader中通过左乘_World2Object。</p>
-<h1 id="世界坐标空间">世界坐标空间</h1><p>所有模型所处的整个世界的三维欧几里德空间。</p>
+<h2 id="世界坐标空间">世界坐标空间</h2><p>所有模型所处的整个世界的三维欧几里德空间。</p>
 <p>世界到本地坐标系<br>在脚本中:transform.localToWorldMatrix的MultiplyPoint或者MultiplyVector方法都可以搞定。<br>在Shader中左乘_Object2World。</p>
-<h1 id="相机空间">相机空间</h1><p>camera的坐标空间。就是相机能看到到世界空间的那一部分。</p>
+<h2 id="相机空间">相机空间</h2><p>camera的坐标空间。就是相机能看到到世界空间的那一部分。</p>
 <p>脚本中:cameraToWorldMatrix.Shader中:UNITY_MATRIX_MV.</p>
-<h1 id="投影矩阵">投影矩阵</h1><p>脚本中:projectionMatrix.Shader中:UNITY_MATRIX_MVP.</p>
+<h2 id="投影矩阵">投影矩阵</h2><p>脚本中:projectionMatrix.Shader中:UNITY_MATRIX_MVP.</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -164,7 +164,7 @@ Unity中的Shader可以有3种形态a.固定管线形如，
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Shader"><span class="toc-number">1.</span> <span class="toc-text">Shader</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Unity中的Shader"><span class="toc-number"></span> <span class="toc-text">Unity中的Shader</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#shader数据接口"><span class="toc-number"></span> <span class="toc-text">shader数据接口</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#空间"><span class="toc-number">1.</span> <span class="toc-text">空间</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#模型空间"><span class="toc-number"></span> <span class="toc-text">模型空间</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#世界坐标空间"><span class="toc-number"></span> <span class="toc-text">世界坐标空间</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#相机空间"><span class="toc-number"></span> <span class="toc-text">相机空间</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#投影矩阵"><span class="toc-number"></span> <span class="toc-text">投影矩阵</span></a>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Shader"><span class="toc-number">1.</span> <span class="toc-text">Shader</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Unity中的Shader"><span class="toc-number">1.1.</span> <span class="toc-text">Unity中的Shader</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#shader数据接口"><span class="toc-number">1.2.</span> <span class="toc-text">shader数据接口</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#空间"><span class="toc-number">2.</span> <span class="toc-text">空间</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#模型空间"><span class="toc-number">2.1.</span> <span class="toc-text">模型空间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#世界坐标空间"><span class="toc-number">2.2.</span> <span class="toc-text">世界坐标空间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相机空间"><span class="toc-number">2.3.</span> <span class="toc-text">相机空间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#投影矩阵"><span class="toc-number">2.4.</span> <span class="toc-text">投影矩阵</span></a></li></ol></li></ol>
   </div>
 
 <div id="asidepart">
