@@ -4,14 +4,12 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>OpenGL Shader备忘 | Jack&#39;s blog</title>
+    <title>禁止STL中map set自动排序 | Jack&#39;s blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Jack.LN">
     
-    <meta name="description" content="关于噪声
-
-texture2D( _tex, (p+0.5)/64.0, -100.0 ).xy;fract(sin(vec2(dot(p,vec2(127.1,311.7)),dot(p,vec2(269.5,183.3))))*43758.5453);">
+    <meta name="description" content="12345678910template&amp;lt;class T&amp;gt;struct DisableCompare :public std::binary_function&amp;lt;T,T,bool&amp;gt;&amp;#123;    bool operator()(T lhs,T rhs)  const    &amp;">
     
     
     
@@ -69,15 +67,15 @@ texture2D( _tex, (p+0.5)/64.0, -100.0 ).xy;fract(sin(vec2(dot(p,vec2(127.1,311.7
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/09/27/opengl/" title="OpenGL Shader备忘" itemprop="url">OpenGL Shader备忘</a>
+      <a href="/2016/02/01/stlmap/" title="禁止STL中map set自动排序" itemprop="url">禁止STL中map set自动排序</a>
   </h1>
   <p class="article-author">By
     
       <a href="https://github.com/JackLN" title="Jack.LN">Jack.LN</a>
     </p>
   <p class="article-time">
-    <time datetime="2015-09-27T12:15:00.000Z" itemprop="datePublished">2015-09-27</time>
-    更新日期:<time datetime="2015-09-27T12:20:26.000Z" itemprop="dateModified">2015-09-27</time>
+    <time datetime="2016-02-01T05:30:59.000Z" itemprop="datePublished">2016-02-01</time>
+    更新日期:<time datetime="2016-02-01T05:40:07.000Z" itemprop="dateModified">2016-02-01</time>
     
   </p>
 </header>
@@ -86,20 +84,16 @@ texture2D( _tex, (p+0.5)/64.0, -100.0 ).xy;fract(sin(vec2(dot(p,vec2(127.1,311.7
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#关于噪声"><span class="toc-number">1.</span> <span class="toc-text">关于噪声</span></a></li></ol>
+		
 		</div>
 		
-		<h1 id="关于噪声">关于噪声</h1><p><img src="http://7xl9we.com1.z0.glb.clouddn.com/tex16.png" alt="tex64*64"></p>
-<blockquote>
-<p>texture2D( _tex, (p+0.5)/64.0, -100.0 ).xy;<br>fract(sin(vec2(dot(p,vec2(127.1,311.7)),dot(p,vec2(269.5,183.3))))*43758.5453);</p>
-</blockquote>
-  
+		<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</span><br><span class="line"><span class="keyword">struct</span> DisableCompare :<span class="keyword">public</span> <span class="built_in">std</span>::binary_function&lt;T,T,<span class="keyword">bool</span>&gt;</span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">operator</span><span class="params">()</span><span class="params">(T lhs,T rhs)</span>  <span class="keyword">const</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">     &#125;</span><br><span class="line">&#125;；</span><br><span class="line"></span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">map</span>&lt;<span class="keyword">int</span>,<span class="built_in">string</span>,DisableCompare&lt;<span class="keyword">int</span>&gt; &gt; sMap;</span><br></pre></td></tr></table></figure>  
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/OpenGL/">OpenGL</a><a href="/tags/Shader/">Shader</a>
+  <span></span> <a href="/tags/C/">C++</a>
   </div>
 
 
@@ -107,7 +101,7 @@ texture2D( _tex, (p+0.5)/64.0, -100.0 ).xy;fract(sin(vec2(dot(p,vec2(127.1,311.7
 
 <div class="article-share" id="share">
 
-  <div data-url="https://github.com/JackLN/2015/09/27/opengl/" data-title="OpenGL Shader备忘 | Jack&#39;s blog" data-tsina="null" class="share clearfix">
+  <div data-url="https://github.com/JackLN/2016/02/01/stlmap/" data-title="禁止STL中map set自动排序 | Jack&#39;s blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -116,19 +110,11 @@ texture2D( _tex, (p+0.5)/64.0, -100.0 ).xy;fract(sin(vec2(dot(p,vec2(127.1,311.7
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/10/05/unityshaderlabstudy/" title="UnityShaderLab学习笔记">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  UnityShaderLab学习笔记</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2015/09/21/fun/"  title="Unity中的CG函数总结">
+<a href="/2015/12/05/python-unity/"  title="使用python做一些工具">
  <strong>NEXT:</strong><br/> 
- <span>Unity中的CG函数总结
+ <span>使用python做一些工具
 </span>
 </a>
 </div>
@@ -145,7 +131,7 @@ texture2D( _tex, (p+0.5)/64.0, -100.0 ).xy;fract(sin(vec2(dot(p,vec2(127.1,311.7
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#关于噪声"><span class="toc-number">1.</span> <span class="toc-text">关于噪声</span></a></li></ol>
+  
   </div>
 
 <div id="asidepart">
