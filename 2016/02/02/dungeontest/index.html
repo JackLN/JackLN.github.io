@@ -4,10 +4,13 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>dungeontest | Jack&#39;s blog</title>
+    <title>迷宫与地牢的生成（roguelike） | Jack&#39;s blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Jack.LN">
+    
+    <meta name="description" content="写在前面近日在微博上看到大大们分享了roguelike游戏的迷宫地牢生成，地址在文章最后，经过了学习后作出了一个小demo，写一篇博文来记录学习的的过程，先看成果：
+demo中灰色的是走廊，网格代表着房间，红色是连接各个部分的门或者什么东西。怎么说呢，是不是有点nethack的赶脚。这个程序大致做了">
     
     
     
@@ -63,7 +66,7 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/02/02/dungeontest/" title="dungeontest" itemprop="url">dungeontest</a>
+      <a href="/2016/02/02/dungeontest/" title="迷宫与地牢的生成（roguelike）" itemprop="url">迷宫与地牢的生成（roguelike）</a>
   </h1>
   <p class="article-author">By
     
@@ -71,7 +74,7 @@
     </p>
   <p class="article-time">
     <time datetime="2016-02-02T05:39:17.000Z" itemprop="datePublished">2016-02-02</time>
-    更新日期:<time datetime="2016-02-02T06:13:24.000Z" itemprop="dateModified">2016-02-02</time>
+    更新日期:<time datetime="2016-02-02T10:32:29.000Z" itemprop="dateModified">2016-02-02</time>
     
   </p>
 </header>
@@ -80,16 +83,26 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#写在前面"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#生成房间"><span class="toc-number">2.</span> <span class="toc-text">生成房间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#生成走廊"><span class="toc-number">3.</span> <span class="toc-text">生成走廊</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#连接各个区域"><span class="toc-number">4.</span> <span class="toc-text">连接各个区域</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#除去死胡同"><span class="toc-number">5.</span> <span class="toc-text">除去死胡同</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#写在后面"><span class="toc-number">6.</span> <span class="toc-text">写在后面</span></a></li></ol>
 		</div>
 		
-		  
+		<h2 id="写在前面">写在前面</h2><p>近日在微博上看到大大们分享了roguelike游戏的迷宫地牢生成，地址在文章最后，经过了学习后作出了一个小demo，写一篇博文来记录学习的的过程，先看成果：<br><img src="http://7xl9we.com1.z0.glb.clouddn.com/dungeo8.png" alt="final"></p>
+<p>demo中灰色的是走廊，网格代表着房间，红色是连接各个部分的门或者什么东西。怎么说呢，是不是有点nethack的赶脚。<br>这个程序大致做了这样的事情<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">func <span class="title">dungeontest</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	初始化数据;</span><br><span class="line">	创建房间;</span><br><span class="line">	创建走廊;</span><br><span class="line">	连接各部分;</span><br><span class="line">	除去死路;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>demo使用了cocos2dx3.3游戏引擎，语言为C++。主要的难点是要作出roguelike的随机性</p>
+<h2 id="生成房间">生成房间</h2><p>在生成房间之前先要考虑一下整个地牢与迷宫在数据结构中的体现。<br>将整个区域划分成为一个个的小格子，使用二维结构保存起来。需要注意的是横纵方向个数要保证为奇数。<br>接下来随机生成每一个房间。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">func <span class="title">createrooms</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">while</span>(生成次数N&gt;<span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		随机房间左下角坐标与尺寸；</span><br><span class="line">		如果不与其他存在的房间重叠:</span><br><span class="line">			创建一个房间；</span><br><span class="line">		N--；</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这个值得注意的是每个房间的长和宽必须是奇数，至于左下角的坐标要看定数据结构的起始为0或1仔细思考后再确定是奇数或是偶数。（demo中虽然从0开始但是最最外面一圈我没有使用，也就是说有效的块从1开始计数）<br>生成后效果：<br><img src="http://7xl9we.com1.z0.glb.clouddn.com/dungeo31.png" alt="room"></p>
+<h2 id="生成走廊">生成走廊</h2><p>生成走廊的过程是将创建房间完成后的剩余的块填充成迷宫。先看效果：<br><img src="http://7xl9we.com1.z0.glb.clouddn.com/dungeon1.png" alt="corridor"><br><img src="http://7xl9we.com1.z0.glb.clouddn.com/dungeon2.png" alt="corridor"><br>生成迷宫的过程可以抽象为树的生成，生成的过程为连接每一个“节点”。这些“节点”为下图中的灰格子（我实在不知道该怎么用语言描述，只能上图了）<br><img src="http://7xl9we.com1.z0.glb.clouddn.com/dungeo4.png" alt="corridor"><br>每一条迷宫生成的过程：<br>将起点压入栈stack中，然后：<br>a.判断起点node上下左右四个方向的下一个几点是否存在。如果不存在把信息纪录为list。<br>b.如果a中的list不为空，则将node向list中的某一个方向移动两格并将移动后的坐标压入栈stack中。重复a。<br>c.如果a中的list为空，则node＝stack.pop()。<br>d.stack为空结束。<br>其中b中的方向不仅仅是在list中随机一个，还会在一定程度上取决于上次移动的方向。<br>如图为生成一条迷宫。<br><img src="http://7xl9we.com1.z0.glb.clouddn.com/dungeo5.png" alt="corridor"></p>
+<h2 id="连接各个区域">连接各个区域</h2><p>走廊（迷宫）和房间都搞定了，我们要将它们连接起来，确保每一个区域都连通起来。这里的“区域”是指到现在生成的所有封闭的元素，可能是一段迷宫，可能是一个房间，每个区域互不连通。在之前生成每个房间和每一条迷宫的同时要将其包括的块附上不同的值用来代表他们的区域，同一个区域的块值相等。<br>基本的思路是找出所有能连接两个（这里最多是两个，不可能会更多）不同区域的点（判断上下左右4个块，不为空且处于的区域），然后将这个点和其能连通的区域保存起来。如下图的所有红色的块：<br><img src="http://7xl9we.com1.z0.glb.clouddn.com/dungeo6.png" alt="corridor"></p>
+<p>接着我们得到了这样的问题：有N个区域，有M个点，对于每个点p可以连接两个区域，找出一条连通所有区域的策略。<br>解决的思路是：<br>a.随机找一个点p，连通并合并两个区域。<br>b.删除p意外所有能连接这两个区域的点。<br>c.继续a，直到所有区域都连通。<br>ps：可以在b中删除的时候有极小的几率生成门。更具体的思路可以搜索“spanning tree”。<br><img src="http://7xl9we.com1.z0.glb.clouddn.com/dungeo7.png" alt="corridor"></p>
+<h2 id="除去死胡同">除去死胡同</h2><p>对于每一个走廊的块，其上下左右中有3个为空，把这个块干掉就可以了。<br><img src="http://7xl9we.com1.z0.glb.clouddn.com/dungeo8.png" alt="final"></p>
+<h2 id="写在后面">写在后面</h2><p>主要参考：<a href="http://journal.stuffwithstuff.com/2014/12/21/rooms-and-mazes/" target="_blank" rel="external">http://journal.stuffwithstuff.com/2014/12/21/rooms-and-mazes/</a><br>基本的思路都是学习了这位大大的。<br>整个的学习过程还是有一点烧脑的（主要是我太弱了）<br>demo源码：<a href="https://github.com/JackLN/DungeonTest">https://github.com/JackLN/DungeonTest</a><br>源码中没有上传cocos引擎，使用cocos新建一个cpp工程然后替换Classes文件夹即可。</p>
+  
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/cocos2d-x/">cocos2d-x</a><a href="/tags/dungeon/">dungeon</a><a href="/tags/test/">test</a>
+  <span></span> <a href="/tags/cocos2d-x/">cocos2d-x</a><a href="/tags/dungeon/">dungeon</a><a href="/tags/roguelike/">roguelike</a>
   </div>
 
 
@@ -97,7 +110,7 @@
 
 <div class="article-share" id="share">
 
-  <div data-url="https://github.com/JackLN/2016/02/02/dungeontest/" data-title="dungeontest | Jack&#39;s blog" data-tsina="null" class="share clearfix">
+  <div data-url="https://github.com/JackLN/2016/02/02/dungeontest/" data-title="迷宫与地牢的生成（roguelike） | Jack&#39;s blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -135,7 +148,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#写在前面"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#生成房间"><span class="toc-number">2.</span> <span class="toc-text">生成房间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#生成走廊"><span class="toc-number">3.</span> <span class="toc-text">生成走廊</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#连接各个区域"><span class="toc-number">4.</span> <span class="toc-text">连接各个区域</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#除去死胡同"><span class="toc-number">5.</span> <span class="toc-text">除去死胡同</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#写在后面"><span class="toc-number">6.</span> <span class="toc-text">写在后面</span></a></li></ol>
   </div>
 
 <div id="asidepart">
@@ -181,13 +194,13 @@
 		
 			<li><a href="/tags/dungeon/" title="dungeon">dungeon<sup>1</sup></a></li>
 		
+			<li><a href="/tags/dungeon，roguelike/" title="dungeon，roguelike">dungeon，roguelike<sup>0</sup></a></li>
+		
 			<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
 		
 			<li><a href="/tags/github/" title="github">github<sup>1</sup></a></li>
 		
 			<li><a href="/tags/kali/" title="kali">kali<sup>1</sup></a></li>
-		
-			<li><a href="/tags/kernel/" title="kernel">kernel<sup>1</sup></a></li>
 		
 		</ul>
 </div>
