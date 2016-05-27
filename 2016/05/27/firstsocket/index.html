@@ -4,13 +4,13 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>(TP:5F9437F9) TexturePacker,PhysicsEditor注册码 | Jack&#39;s blog</title>
+    <title>Socket初探 | Jack&#39;s blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Jack.LN">
     
-    <meta name="description" content="下载地址：http://www.codeandweb.com/texturepackerhttp://www.codeandweb.com/physicseditorhttp://twitter.com/CodeAndWeb
-获取免费注册码地址：https://www.codeandweb.com/">
+    <meta name="description" content="程序猿的第二天性真是个神奇的东西，做久了客户端，就开始好奇服务端正巧最近在负责的项目需要更为了解一些服务端的内容。正巧最近身体不好在家休养，有大把的时间可以挥霍！于是，我就开始尝试着去接触Socket了！想想就令人激动，探索未知的区域啊！
+以前接触的项目要么就是前人封装好的模块，协议通常使用prot">
     
     
     
@@ -66,15 +66,15 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/04/12/TexturePacker/" title="(TP:5F9437F9) TexturePacker,PhysicsEditor注册码" itemprop="url">(TP:5F9437F9) TexturePacker,PhysicsEditor注册码</a>
+      <a href="/2016/05/27/firstsocket/" title="Socket初探" itemprop="url">Socket初探</a>
   </h1>
   <p class="article-author">By
     
       <a href="https://github.com/JackLN" title="Jack.LN">Jack.LN</a>
     </p>
   <p class="article-time">
-    <time datetime="2016-04-12T15:41:43.000Z" itemprop="datePublished">2016-04-12</time>
-    更新日期:<time datetime="2016-04-12T15:55:13.000Z" itemprop="dateModified">2016-04-12</time>
+    <time datetime="2016-05-27T08:14:25.000Z" itemprop="datePublished">2016-05-27</time>
+    更新日期:<time datetime="2016-05-27T10:04:25.000Z" itemprop="dateModified">2016-05-27</time>
     
   </p>
 </header>
@@ -83,19 +83,24 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Server"><span class="toc-number">1.</span> <span class="toc-text">Server</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Client"><span class="toc-number">2.</span> <span class="toc-text">Client</span></a></li></ol>
 		</div>
 		
-		<p>下载地址：<br><a href="http://www.codeandweb.com/texturepacker" target="_blank" rel="external">http://www.codeandweb.com/texturepacker</a><br><a href="http://www.codeandweb.com/physicseditor" target="_blank" rel="external">http://www.codeandweb.com/physicseditor</a><br><a href="http://twitter.com/CodeAndWeb" target="_blank" rel="external">http://twitter.com/CodeAndWeb</a></p>
-<p>获取免费注册码地址：<br><a href="https://www.codeandweb.com/request-free-license" target="_blank" rel="external">https://www.codeandweb.com/request-free-license</a></p>
-<p>TexturePacker和PhysicsEditor都是非常实用的工具!<br>使用可以去官网免费获取注册码～</p>
+		<p>程序猿的第二天性真是个神奇的东西，做久了客户端，就开始好奇服务端<br>正巧最近在负责的项目需要更为了解一些服务端的内容。<br>正巧最近身体不好在家休养，有大把的时间可以挥霍！<br>于是，我就开始尝试着去接触Socket了！想想就令人激动，探索未知的区域啊！</p>
+<p>以前接触的项目要么就是前人封装好的模块，协议通常使用protobuffer。<br>虽然顺着代码一路F12了解了很多客户端的逻辑。但是总有一种别人定下了规则，你只要按着规则做就好的感觉。<br>收消息发消息，最多就是模块化，封装起来。虽然上学时学过什么3次握手，TCP，UDP，现在都已经还给老师了。<br>本着刨根问底的思想，我还是去从最开始的Hello World一点一点地搞起来</p>
+<p>先上一张图，图是盗来的<br><img src="http://7xl9we.com1.z0.glb.clouddn.com/socket.png" alt="room"></p>
+<h2 id="Server">Server</h2><p>1.创建一个socket<br>2.bind<br>3.listen<br>4.accept<br>5.write/read<br>6.close</p>
+<p>伪代码<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">struct sockaddr_<span class="keyword">in</span> s_<span class="keyword">in</span>;</span><br><span class="line">int l_fd;</span><br><span class="line">l_fd = socket(AF_INET,SOCK_STREAM,<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">bind</span>(l_fd,(struct sockaddr *)&amp;s_<span class="keyword">in</span>,sizeof(s_<span class="keyword">in</span>));</span><br><span class="line">listen(l_fd,<span class="number">10</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">&#123;</span><br><span class="line">	c_fd = accept(l_fd,(struct sockaddr *)&amp;c_<span class="keyword">in</span>,&amp;len);</span><br><span class="line"></span><br><span class="line">    int n = <span class="built_in">read</span>(c_fd,buf,<span class="number">1024</span>);</span><br><span class="line">    inet_ntop(AF_INET,&amp;c_in.sin_addr,addr_p,<span class="number">16</span>);</span><br><span class="line">        </span><br><span class="line">    write(c_fd,<span class="built_in">test</span>,n);</span><br><span class="line"></span><br><span class="line">    close(c_fd);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="Client">Client</h2><p>1.socket<br>2.connect<br>3.write/read<br>4.close</p>
+<p>伪代码<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">struct sockaddr_<span class="keyword">in</span> s_<span class="keyword">in</span>;</span><br><span class="line">   int s_fd;</span><br><span class="line"></span><br><span class="line">   s_fd = socket(AF_INET,SOCK_STREAM,<span class="number">0</span>);</span><br><span class="line">   connect(s_fd,(struct sockaddr *)&amp;s_<span class="keyword">in</span>,sizeof(s_<span class="keyword">in</span>));</span><br><span class="line">   write(s_fd,str,strlen(str)+<span class="number">1</span>);</span><br><span class="line">   <span class="built_in">read</span>(s_fd,buf,<span class="number">100</span>);</span><br><span class="line">   </span><br><span class="line"></span><br><span class="line">   close(s_fd);</span><br></pre></td></tr></table></figure></p>
+<p>OK最基本的HelloWorld我已经跑通了，可以深入的研究了。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/PhysicsEditor/">PhysicsEditor</a><a href="/tags/TexturePacker/">TexturePacker</a><a href="/tags/注册码/">注册码</a>
+  <span></span> <a href="/tags/linux/">linux</a><a href="/tags/socket/">socket</a>
   </div>
 
 
@@ -103,7 +108,7 @@
 
 <div class="article-share" id="share">
 
-  <div data-url="https://github.com/JackLN/2016/04/12/TexturePacker/" data-title="(TP:5F9437F9) TexturePacker,PhysicsEditor注册码 | Jack&#39;s blog" data-tsina="null" class="share clearfix">
+  <div data-url="https://github.com/JackLN/2016/05/27/firstsocket/" data-title="Socket初探 | Jack&#39;s blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -112,19 +117,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2016/05/27/firstsocket/" title="Socket初探">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  Socket初探</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2016/03/04/qtcocos/"  title="Cocos2dx-Qt">
+<a href="/2016/04/12/TexturePacker/"  title="(TP:5F9437F9) TexturePacker,PhysicsEditor注册码">
  <strong>NEXT:</strong><br/> 
- <span>Cocos2dx-Qt
+ <span>(TP:5F9437F9) TexturePacker,PhysicsEditor注册码
 </span>
 </a>
 </div>
@@ -141,7 +138,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Server"><span class="toc-number">1.</span> <span class="toc-text">Server</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Client"><span class="toc-number">2.</span> <span class="toc-text">Client</span></a></li></ol>
   </div>
 
 <div id="asidepart">
